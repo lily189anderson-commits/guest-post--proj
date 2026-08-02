@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login · Guest Post & Backlink Engine</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-body">
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="brand">
+        <div class="brand-mark">GP</div>
+        <div>
+          <h1>Guest Post Engine</h1>
+          <p class="muted">Backlink & Client Management</p>
+        </div>
+      </div>
+
+      <form id="loginForm" autocomplete="off">
+        <label class="field">
+          <span>Username</span>
+          <input type="text" id="username" placeholder="admin" required>
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </label>
+
+        <div id="loginError" class="error-msg" hidden></div>
+
+        <button type="submit" class="btn-primary" id="loginBtn">Sign In</button>
+      </form>
+
+      <p class="hint">Default: <code>admin</code> / <code>admin123</code> (set via seed.py)</p>
+    </div>
+  </div>
+
+<script src="/js/auth.js"></script>
+</body>
+</html>

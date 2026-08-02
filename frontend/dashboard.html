@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · Guest Post & Backlink Engine</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand brand-sm">
+      <div class="brand-mark">GP</div>
+      <div>
+        <h2>Backlink Engine</h2>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-tab="overview">
+        <span class="dot"></span> Overview
+      </button>
+      <button class="nav-item" data-tab="clients">
+        <span class="dot"></span> Clients
+      </button>
+      <button class="nav-item" data-tab="websites">
+        <span class="dot"></span> Websites
+      </button>
+      <button class="nav-item" data-tab="orders">
+        <span class="dot"></span> Orders & Links
+      </button>
+      <button class="nav-item" data-tab="analytics">
+        <span class="dot"></span> Analytics
+      </button>
+    </nav>
+
+    <button id="logoutBtn" class="btn-ghost logout-btn">Log Out</button>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="topbar">
+      <h1 id="pageTitle">Overview</h1>
+      <div class="topbar-right">
+        <span id="toast" class="toast" hidden></span>
+      </div>
+    </header>
+
+    <!-- OVERVIEW TAB -->
+    <section class="tab-panel" id="tab-overview">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label">Collected Revenue</span>
+          <span class="stat-value" id="statCollected">$0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Pending Payments</span>
+          <span class="stat-value" id="statPending">$0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Total Orders</span>
+          <span class="stat-value" id="statOrders">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Active Links</span>
+          <span class="stat-value" id="statActive">0</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Recent Orders</h3>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Client</th><th>Website</th><th>Anchor</th><th>Price</th><th>Link Status</th></tr>
+            </thead>
+            <tbody id="overviewOrdersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENTS TAB -->
+    <section class="tab-panel hidden" id="tab-clients">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Add Client</h3>
+        </div>
+        <form id="clientForm" class="inline-form">
+          <input type="text" id="clientName" placeholder="Client name" required>
+          <input type="email" id="clientEmail" placeholder="Email" required>
+          <input type="text" id="clientPhone" placeholder="Phone (optional)">
+          <input type="text" id="clientNotes" placeholder="Notes (optional)">
+          <button type="submit" class="btn-primary">Add Client</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Clients</h3>
+          <input type="text" id="clientSearch" class="search-box" placeholder="Search clients…">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Notes</th><th></th></tr>
+            </thead>
+            <tbody id="clientsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEBSITES TAB -->
+    <section class="tab-panel hidden" id="tab-websites">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Add Website</h3>
+        </div>
+        <form id="websiteForm" class="inline-form">
+          <input type="text" id="siteDomain" placeholder="example.com" required>
+          <input type="number" id="siteDA" placeholder="DA score" min="0" max="100" required>
+          <input type="number" id="siteDR" placeholder="DR score" min="0" max="100" required>
+          <input type="text" id="siteNiche" placeholder="Niche (optional)">
+          <button type="submit" class="btn-primary">Add Website</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Websites</h3>
+          <input type="text" id="websiteSearch" class="search-box" placeholder="Search websites…">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Domain</th><th>DA</th><th>DR</th><th>Niche</th><th></th></tr>
+            </thead>
+            <tbody id="websitesBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDERS TAB -->
+    <section class="tab-panel hidden" id="tab-orders">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Create Order</h3>
+        </div>
+        <form id="orderForm" class="inline-form">
+          <select id="orderClient" required></select>
+          <select id="orderWebsite" required></select>
+          <input type="url" id="orderTargetLink" placeholder="Target backlink URL" required>
+          <input type="text" id="orderAnchor" placeholder="Anchor text" required>
+          <input type="number" id="orderPrice" placeholder="Price ($)" min="0" step="0.01" required>
+          <button type="submit" class="btn-primary">Create Order</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Orders</h3>
+          <div class="filter-row">
+            <input type="text" id="orderSearch" class="search-box" placeholder="Search orders…">
+            <div class="chip-group" id="statusChips">
+              <button class="chip active" data-filter="all">All</button>
+              <button class="chip" data-filter="active">Active</button>
+              <button class="chip" data-filter="broken">Broken</button>
+              <button class="chip" data-filter="pending">Pending</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th><th>Client</th><th>Website</th><th>Anchor</th>
+                <th>Price</th><th>Paid</th><th>Payment</th><th>Link Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANALYTICS TAB -->
+    <section class="tab-panel hidden" id="tab-analytics">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Collected</span>
+          <span class="stat-value" id="anCollected">$0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Total Expected</span>
+          <span class="stat-value" id="anExpected">$0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Total Pending</span>
+          <span class="stat-value" id="anPending">$0</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Revenue by Client</h3></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Client</th><th>Orders</th><th>Earned</th><th>Pending</th></tr></thead>
+            <tbody id="analyticsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Modal for link health check -->
+<div class="modal-overlay hidden" id="checkModalOverlay">
+  <div class="modal">
+    <h3>Check Link Health</h3>
+    <p class="muted">Enter the guest-post page URL to verify this backlink is live.</p>
+    <input type="url" id="checkPageUrl" placeholder="https://blog.com/the-guest-post" required>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="checkModalCancel">Cancel</button>
+      <button class="btn-primary" id="checkModalConfirm">Check Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for payment -->
+<div class="modal-overlay hidden" id="paymentModalOverlay">
+  <div class="modal">
+    <h3>Record Payment</h3>
+    <input type="number" id="paymentAmount" placeholder="Amount ($)" min="0" step="0.01" required>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="paymentModalCancel">Cancel</button>
+      <button class="btn-primary" id="paymentModalConfirm">Record</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>
